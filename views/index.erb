@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <title>Sinatra</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/foundation.min.css/" type="text/css" />
+  <script src="/js/jquery.js"> </script>
+  <script src="/js/foundation.min.js"> </script>
+</head>
+<body>
+  <div class="callout large primary">
+   <div class="row column text-center">
+     <h1>Ejemplo: Ruby - GEM [Sinatra] - MongoDB</h1>
+    <h2 class="subheader">Rack-Protection</h2>
+   </div>
+  </div>
+<header>
+      <div class="top-bar">
+        <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+            <li><a href="/" title="Inicio">Inicio</a></li>
+            <li class=".is-dropdown-submenu-parent">
+              <a>Colecciones</a>
+              <ul class="menu vertical">
+                <li><a href="/collections">Mostrar</a></li>
+                <li><a href="#!">Agregar</a></li>
+                <li><a href="#!">Modificar</a></li>
+                <li><a href="#!">Eliminar</a></li>
+              </ul>
+            </li>
+            <!--li class=".is-dropdown-submenu-parent">
+              <a href="#" title="Documentos">Documentos</a>
+                <ul class="menu vertical">
+                  <li><a href="/documents">Mostrar</a></li>
+                  <li><a href="/new_document">Agregar</a></li>
+                  <li><a href="#!">Modificar</a></li>
+                  <li><a href="#!">Eliminar</a></li>
+                </ul>
+            </li-->
+        </ul>
+          </div>
+        </div>
+  </header>
+  <section>
+    <hr>
+    <div class="row column text-center" id="dinamico">
+            
+    </div>
+    <hr>
+   </section>
+   <script>
+     $(document).foundation();
+     
+     var myArr= <% if @content == ''%>
+            null
+        <% else %>
+            <%= @content %>
+        <% end %>;
+     var result= "<table>";
+     
+     $.each(myArr, function(index, row){
+        result+= "<tr>";
+        if($.type(row) === "object"){
+            $.each(row, function(i, col){
+                if(i !== "_id")
+                    result+= "<td>" + col + "</td>";
+            });
+        }else{
+            result+= "<td><a href='/documents/" + row + "'>" + row + "</a></td>";
+        }
+        result+= "</tr>";
+     });
+     result+= "</table>";
+     $("#dinamico").html(result);
+   </script>
+</body>
+</html>
